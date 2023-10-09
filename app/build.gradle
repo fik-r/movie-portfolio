@@ -1,0 +1,74 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    id 'kotlin-kapt'
+    alias(libs.plugins.navigation)
+}
+
+android {
+    namespace 'com.example.myapplication'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "APP_SERVICE_IMAGE_BASE_URL", '"https://image.tmdb.org/t/p/original/"')
+        buildConfigField("String", "APP_SERVICE_BASE_URL", '"https://api.themoviedb.org/3/"')
+        buildConfigField("String", "APP_SERVICE_API_KEY", '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDRiOWIyMWRjYzY1YWIzNmI4MjcwMTVhOTE5NjQxMSIsInN1YiI6IjViZjRkNDA1YzNhMzY4MjU0NTAwZjIzNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KWW9HkoVg7jzD8mZptZmL9NkdSuctYTHSaz-2vu5DAI"')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation(libs.bundles.navigation)
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.viewpager2)
+    implementation(libs.circleimageview)
+    implementation(libs.logging.interceptor)
+    implementation(libs.bundles.retrofit)
+    implementation(libs.paging)
+    implementation(libs.glide)
+    implementation(libs.swiperefresh)
+    annotationProcessor(libs.glide.compiler)
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.noop)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.testing)
+    androidTestAnnotationProcessor(libs.hilt.compiler)
+    testImplementation(libs.hilt.testing)
+    testAnnotationProcessor(libs.hilt.compiler)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.junit.ext)
+    androidTestImplementation(libs.espresso.core)
+
+
+    implementation project(path: ':common')
+    implementation project(path: ':domain:usecase')
+    implementation project(path: ':domain:model')
+    implementation project(path: ':data')
+}
